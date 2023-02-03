@@ -13,6 +13,12 @@
         padding: 50px;
     }
 </style>
+<?php
+include 'connection.php';
+$query='SELECT * FROM post';
+$select=mysqli_query($db,$query);
+?>
+
 
 <body>
     <div class="container">
@@ -41,14 +47,16 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>PHP</td>
-                                        <td>Ppphh</td>
-                                        <td>Ppphh32423</td>
+                                        <?php foreach($select as $a) :?>
+                                        <th scope="row"><?= $select['id'];?></th>
+                                        <td><?= $select['name'];?></td>
+                                        <td><?= $select['des'];?></td>
+                                        <td><?= $select['create'];?></td>
                                         <td>
                                             <a href="http://" class="btn btn-danger">Delete</a>
                                             <a href="http://" class="btn btn-success">Update</a>
                                         </td>
+                                        <?php endforeach;?>
                                     </tr>
                                 </tbody>
                             </table>
