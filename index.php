@@ -15,8 +15,9 @@
 </style>
 <?php
 include 'connection.php';
-$query='SELECT * FROM post';
-$select=mysqli_query($db,$query);
+$query = "SELECT * FROM post";
+$select = mysqli_query($db, $query);
+
 ?>
 
 
@@ -35,7 +36,7 @@ $select=mysqli_query($db,$query);
                             </div>
                         </div>
                         <div class="card-body">
-                            <table class="table">
+                            <table class="table table-bordered border-primary">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
@@ -46,18 +47,19 @@ $select=mysqli_query($db,$query);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <?php foreach($select as $a) :?>
-                                        <th scope="row"><?= $select['id'];?></th>
-                                        <td><?= $select['name'];?></td>
-                                        <td><?= $select['des'];?></td>
-                                        <td><?= $select['create'];?></td>
-                                        <td>
-                                            <a href="http://" class="btn btn-danger">Delete</a>
-                                            <a href="http://" class="btn btn-success">Update</a>
-                                        </td>
-                                        <?php endforeach;?>
-                                    </tr>
+                                    <?php foreach ($select as $a) : ?>
+                                            <tr>
+                                            <th scope="row"><?= $a['id']; ?></th>
+                                            <td><?= $a['name']; ?></td>
+                                            <td><?= $a['des']; ?></td>
+                                            <td><?= $a['create']; ?></td>
+                                            <td>
+                                                <a href="http://" class="btn btn-danger">Delete</a>
+                                                <a href="http://" class="btn btn-success">Update</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+
                                 </tbody>
                             </table>
                         </div>

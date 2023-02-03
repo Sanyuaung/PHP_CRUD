@@ -13,6 +13,18 @@
         padding: 50px;
     }
 </style>
+<?php
+include 'connection.php';
+
+if (isset($_POST['post'])) {
+    // echo $_POST['name'];
+    $query = "INSERT INTO `post`(`name`, `des`) VALUES ('$_POST[name]','$_POST[desc]')";
+    $insert = mysqli_query($db, $query);
+    header('location: index.php');
+}
+
+
+?>
 
 <body>
     <div class="container">
@@ -39,7 +51,7 @@
                                     <label for="" class="form-label">Description</label>
                                     <input name="desc" type="text" class="form-control" id="" placeholder="Enter your post description">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Post</button>
+                                <button name="post" type="submit" class="btn btn-primary">Post</button>
                             </form>
                         </div>
                     </div>
