@@ -15,11 +15,11 @@
 </style>
 <?php
 include 'connection.php';
+session_start();
 $query = "SELECT * FROM post";
 $select = mysqli_query($db, $query);
 
 ?>
-
 
 <body>
     <div class="container">
@@ -28,6 +28,15 @@ $select = mysqli_query($db, $query);
                 <div class="card">
                     <div class="card-header">
                         <div class="row card-header">
+                            <?php if (isset($_SESSION['message'])) : ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <?php
+                                    echo $_SESSION['message'];
+                                    unset($_SESSION['message']);
+                                    ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            <?php endif ?>
                             <div class="col-6">
                                 <h1 class="text-primary ">Post Lists</h1>
                             </div>
@@ -36,7 +45,7 @@ $select = mysqli_query($db, $query);
                             </div>
                         </div>
                         <div class="card-body">
-                            <table class="table table-bordered border-primary">
+                            <table class="table table-bordered border-primary text-center">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
@@ -48,13 +57,15 @@ $select = mysqli_query($db, $query);
                                 </thead>
                                 <tbody>
                                     <?php foreach ($select as $a) : ?>
-                                            <tr>
+                                        <tr>
                                             <th scope="row"><?= $a['id']; ?></th>
                                             <td><?= $a['name']; ?></td>
                                             <td><?= $a['des']; ?></td>
                                             <td><?= $a['create']; ?></td>
                                             <td>
-                                                <a href="http://" class="btn btn-danger">Delete</a>
+                                                <a href="index.php?edit=<?php echo $a['id']; ?>" class="btn btn-danger">Edit</a>
+
+                                                <a name='delete' href="http://" class="btn btn-danger">Delete</a>
                                                 <a href="http://" class="btn btn-success">Update</a>
                                             </td>
                                         </tr>

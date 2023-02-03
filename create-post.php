@@ -15,15 +15,25 @@
 </style>
 <?php
 include 'connection.php';
-
+session_start();
+$nameError = '';
+$descError = '';
 if (isset($_POST['post'])) {
-    // echo $_POST['name'];
-    $query = "INSERT INTO `post`(`name`, `des`) VALUES ('$_POST[name]','$_POST[desc]')";
-    $insert = mysqli_query($db, $query);
-    header('location: index.php');
+    $name = $_POST['name'];
+    $desc = $_POST['desc'];
+    if (empty($name)) {
+        $nameError = "Name is required";
+    }
+    if (empty($desc)) {
+        $descError = "Description is required";
+    }
+    if (!empty($name) && !empty($desc)) {
+        $query = "INSERT INTO `post`(`name`, `des`) VALUES ('$_POST[name]','$_POST[desc]')";
+        $insert = mysqli_query($db, $query);
+        $_SESSION['message'] = "Post is created";
+        header('location: index.php');
+    }
 }
-
-
 ?>
 
 <body>
@@ -42,14 +52,16 @@ if (isset($_POST['post'])) {
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="create-post.php" method="POST">
+                            <form class="needs-validation" novalidate action="create-post.php" method="POST">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Name</label>
-                                    <input name="name" type="text" class="form-control" id="" placeholder="Enter your post name">
+                                    <input name="name" type="text" class="form-control is-invalid" id="" placeholder="Enter your post name">
+                                    <span class="text-danger invalid-feedback"><?= $nameError; ?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Description</label>
-                                    <input name="desc" type="text" class="form-control" id="" placeholder="Enter your post description">
+                                    <input name="desc" type="text" class="form-control is-invalid" id="" placeholder="Enter your post description">
+                                    <span class="text-danger invalid-feedback"><?= $descError; ?></span>
                                 </div>
                                 <button name="post" type="submit" class="btn btn-primary">Post</button>
                             </form>
