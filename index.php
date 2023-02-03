@@ -25,26 +25,31 @@
                                 <h1 class="text-primary ">Post Lists</h1>
                             </div>
                             <div class="col-6">
-                                <a href="" class="btn btn-primary float-end">+ Create Post</a>
+                                <a href="create-post.php" class="btn btn-primary float-end">+ Create Post</a>
                             </div>
                         </div>
                         <div class="card-body">
-                            <table class="table card-subtitle">
+                            <table class="table">
                                 <thead>
-                                    <td>ID</td>
-                                    <td>Name</td>
-                                    <td>Description</td>
-                                    <td>Action</td>
-                                    </th>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Date & Time</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <th>1</th>
-                                    <th>PHP </th>
-                                    <th>afdaf </th>
-                                    <th>
-                                        <a href="http://" class="btn btn-danger">Delete</a>
-                                        <a href="http://" class="btn btn-success">Update</a>
-                                    </th>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>PHP</td>
+                                        <td>Ppphh</td>
+                                        <td>Ppphh32423</td>
+                                        <td>
+                                            <a href="http://" class="btn btn-danger">Delete</a>
+                                            <a href="http://" class="btn btn-success">Update</a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
