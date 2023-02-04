@@ -19,31 +19,12 @@ include 'connection.php';
 session_start();
 $query = "SELECT * FROM post";
 $select = mysqli_query($db, $query);
-if (isset($_GET['delete'])) {
-    $id = $_GET['delete'];
-    if ($id) {
-        $query="DELETE FROM post WHERE id=$id";
-        $delete = mysqli_query($db, $query);
-        $d=mysqli_query($db," ALTER TABLE post AUTO_INCREMENT = $id") ;
-        $_SESSION['message'] = "Deleted successfully.";
-        header("location: index.php");
-    }
-}
 ?>
 
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <?php if (isset($_SESSION['message'])) : ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?php
-                        echo $_SESSION['message'];
-                        unset($_SESSION['message']);
-                    ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <?php endif ?>
                 <div class="card">
                     <div class="card-header">
                         <div class="row card-header">
@@ -55,6 +36,16 @@ if (isset($_GET['delete'])) {
                             </div>
                         </div>
                         <div class="card-body">
+                            <?php if (isset($_SESSION['message'])) : ?>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <?php
+                                    echo $_SESSION['message'];
+                                    unset($_SESSION['message']);
+                                ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                            <?php endif ?>
                             <table class="table table-bordered border-primary text-center">
                                 <thead>
                                     <tr>
@@ -73,9 +64,10 @@ if (isset($_GET['delete'])) {
                                         <td><?= $a['description']; ?></td>
                                         <td><?= $a['date']; ?></td>
                                         <td>
-                                            <a name='delete' href="index.php?delete=<?php echo $a['id']; ?>" class=" btn
-                                                btn-danger">Delete</a>
-                                            <a href="http://" class="btn btn-success">Update</a>
+                                            <a name='delete' href="index.php?deleteID=<?php echo $a['id']; ?>" class=" btn
+                                                btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                                            <a name='update' href="update-post.php?updateID=<?php echo $a['id']; ?>"
+                                                class="btn btn-success">Update</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -88,6 +80,16 @@ if (isset($_GET['delete'])) {
             </div>
         </div>
     </div>
+    <?php
+        if (isset($_GET['deleteID'])) {
+            $id = $_GET['deleteID'];
+            $query="DELETE FROM post WHERE id=$id";
+            mysqli_query($db, $query);
+            mysqli_query($db," ALTER TABLE post AUTO_INCREMENT = $id");
+            $_SESSION['message'] = "A post deleted successfully.";
+            header('location: index.php');
+        }
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
